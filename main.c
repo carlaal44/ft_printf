@@ -18,6 +18,9 @@ int main(void)
     ft_printf("Hexadecimal mayúsculas: %X\n", num);
     ft_printf("Puntero: %p\n", ptr);
 
+    // Prueba de impresión del carácter '%'
+    ft_printf("Porcentaje: %%\n");
+
     // Comparación con printf
     printf("Texto plano\n");
     printf("Caracter: %c\n", ch);
@@ -28,5 +31,9 @@ int main(void)
     printf("Hexadecimal mayúsculas: %X\n", num);
     printf("Puntero: %p\n", ptr);
 
+    // Prueba de impresión del carácter '%'
+    printf("Porcentaje: %%\n");
+
     return 0;
 }
+
