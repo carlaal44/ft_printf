@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   ft_num_nosign.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carfern2 <carfern2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 18:24:08 by carfern2          #+#    #+#             */
-/*   Updated: 2024/12/04 18:24:08 by carfern2         ###   ########.fr       */
+/*   Created: 2024/12/06 13:15:05 by carfern2          #+#    #+#             */
+/*   Updated: 2024/12/06 13:15:05 by carfern2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_printf.h"
 
-int	ft_putchar(int c)
+unsigned int ft_num_nosign(unsigned int num)
 {
-	if (write (1, &c, 1) != 1)
-		return (-1);
-	return (1);
+    if (num >= 10)
+        return (ft_num_nosign(num / 10));
+    ft_putchar(num % 10 + '0');
+    return (1);
 }

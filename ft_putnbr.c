@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "ft_printf.h"
 
 // Función auxiliar para contar los dígitos de un número
 static int count_digits(unsigned int nbr) {
