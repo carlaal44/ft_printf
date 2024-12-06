@@ -14,16 +14,15 @@
 
 int ft_putstr(char *s)
 {
-    int len;
+    int len = 0;
+    int count = 0;
 
     if (!s)
-        return (write(1, "(null)", 6));
-    len = 0;
+        return (ft_putstr("(null)"));
     while (s[len])
     {
-        if (write(1, &s[len], 1) != 1)
-            return (-1);
+        count += ft_putchar(s[len]);
         len++;
     }
-    return (len);
+    return (count);
 }

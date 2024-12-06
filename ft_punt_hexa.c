@@ -11,13 +11,30 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdint.h>
+
+static int  ft_hexa_ptr(uintptr_t nbr)
+{
+    int     count = 0;
+    char    *base = "0123456789abcdef";
+
+    if (nbr >= 16)
+        count += ft_hexa_ptr(nbr / 16);
+    count += ft_putchar(base[nbr % 16]);
+    return (count);
+}
 
 int ft_punt_hexa(void *p)
 {
-    unsigned long long addr;
-    char *base = "0123456789abcdef";
+    uintptr_t   addr;
+    int         count = 0;
 
-    addr = (unsigned long long)p;
-    write(1, "0x", 2);
-    return (write(1, &base[addr], 1));
+    addr = (uintptr_t)p;
+    count += ft_putstr("0x");
+    if (addr == 0)
+        count += ft_putchar('0');
+    else
+        count += ft_hexa_ptr(addr);
+    return (count);
 }
+

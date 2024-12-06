@@ -12,10 +12,12 @@
 
 #include "ft_printf.h"
 
-unsigned int ft_num_nosign(unsigned int num)
+int ft_num_nosign(unsigned int num)
 {
+    int count = 0;
+
     if (num >= 10)
-        return (ft_num_nosign(num / 10));
-    ft_putchar(num % 10 + '0');
-    return (1);
+        count += ft_num_nosign(num / 10);
+    count += ft_putchar((num % 10) + '0');
+    return (count);
 }

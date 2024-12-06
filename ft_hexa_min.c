@@ -12,11 +12,14 @@
 
 #include "ft_printf.h"
 
-int ft_hexa_min(int num)
+int ft_hexa_min(unsigned int num)
 {
-    char *base = "0123456789abcdef";
+    int     count = 0;
+    char    *base = "0123456789abcdef";
+
     if (num >= 16)
-        return (ft_hexa_min(num / 16));
-    ft_putchar(base[num % 16]);
-    return (1);
+        count += ft_hexa_min(num / 16);
+    count += ft_putchar(base[num % 16]);
+    return (count);
 }
+

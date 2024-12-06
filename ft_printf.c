@@ -12,55 +12,57 @@
 
 #include "ft_printf.h"
 
-static int  handle_format(char specifier, va_list args);
+static int  handle_format(char specifier, va_list args)
+{
+    int count = 0;
 
-static int  process_percent(char specifier, va_list args) {
-    int chars_written = 0;
-
-    if (specifier != '%') {
-        chars_written = handle_format(specifier, args);
-        if (chars_written == -1) return (-1);
-        return (chars_written);
-    } else {
-        if (write(1, &specifier, 1) != 1) return (-1);
-        return (1);
-    }
+    if (specifier == 'c')
+        count += ft_putchar(va_arg(args, int));
+    else if (specifier == 's')
+        count += ft_putstr(va_arg(args, char *));
+    else if (specifier == 'p')
+        count += ft_punt_hexa(va_arg(args, void *));
+    else if (specifier == 'd' || specifier == 'i')
+        count += ft_putnbr(va_arg(args, int));
+    else if (specifier == 'u')
+        count += ft_num_nosign(va_arg(args, unsigned int));
+    else if (specifier == 'x')
+        count += ft_hexa_min(va_arg(args, unsigned int));
+    else if (specifier == 'X')
+        count += ft_hexa_mayus(va_arg(args, unsigned int));
+    else if (specifier == '%')
+        count += ft_putchar('%');
+    else
+        count += ft_putchar(specifier);
+    return (count);
 }
 
-static int  process_string(const char *format, va_list args, int total_chars) {
-    int i = 0;
+int ft_printf(const char *format, ...)
+{
+    va_list args;
+    int     total_chars = 0;
+    int     i = 0;
+    int     result;
 
-    while (format[i]) {
-        if (format[i] == '%') {
-            total_chars += process_percent(format[i + 1], args);
-            if (total_chars == -1) return (-1);
+    va_start(args, format);
+    while (format[i])
+    {
+        if (format[i] == '%')
+        {
             i++;
-        } else {
-            if (write(1, &format[i], 1) != 1) return (-1);
+            result = handle_format(format[i], args);
+            if (result == -1)
+                return (-1);
+            total_chars += result;
+        }
+        else
+        {
+            if (ft_putchar(format[i]) == -1)
+                return (-1);
             total_chars++;
         }
         i++;
     }
-    return (total_chars);
-}
-
-int ft_printf(const char *format, ...) {
-    va_list args;
-    int total_chars = 0;
-
-    va_start(args, format);
-    total_chars = process_string(format, args, total_chars);
     va_end(args);
     return (total_chars);
-}
-
-static int  handle_format(char specifier, va_list args) {
-    if (specifier == 'c') return (ft_putchar(va_arg(args, int)));
-    if (specifier == 's') return (ft_putstr(va_arg(args, char *)));
-    if (specifier == 'p') return (ft_punt_hexa(va_arg(args, void *)));
-    if (specifier == 'd' || specifier == 'i') return (ft_putnbr(va_arg(args, int)));
-    if (specifier == 'u') return (ft_num_nosign(va_arg(args, unsigned int)));
-    if (specifier == 'x') return (ft_hexa_min(va_arg(args, int)));
-    if (specifier == 'X') return (ft_hexa_mayus(va_arg(args, int)));
-    return (0);
 }

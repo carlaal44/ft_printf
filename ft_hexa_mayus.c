@@ -12,11 +12,14 @@
 
 #include "ft_printf.h"
 
-int ft_hexa_mayus(int num)
+int ft_hexa_mayus(unsigned int num)
 {
-    char *base = "0123456789ABCDEF";
+    int     count = 0;
+    char    *base = "0123456789ABCDEF";
+
     if (num >= 16)
-        return (ft_hexa_mayus(num / 16));
-    ft_putchar(base[num % 16]);
-    return (1);
+        count += ft_hexa_mayus(num / 16);
+    count += ft_putchar(base[num % 16]);
+    return (count);
 }
+
