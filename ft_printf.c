@@ -6,7 +6,7 @@
 /*   By: carfern2 <carfern2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 18:04:21 by carfern2          #+#    #+#             */
-/*   Updated: 2024/12/07 12:58:17 by carfern2         ###   ########.fr       */
+/*   Updated: 2024/12/07 13:18:41 by carfern2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,25 +45,24 @@ int	ft_printf(const char *format, ...)
 	int			i;
 	int			result;
 
-	total_chars = 0;
 	va_start(args, format);
+	total_chars = 0;
 	while (format[i])
 	{
 		if (format[i] == '%')
 		{
-			i++;
-			result = handle_format(format[i], args);
+			result = process_specifier(format, &i, args);
 			if (result == -1)
 				return (-1);
 			total_chars += result;
 		}
 		else
 		{
-			if (ft_putchar(format[i]) == -1)
+			result = process_text(format, &i);
+			if (result == -1)
 				return (-1);
-			total_chars++;
+			total_chars += result;
 		}
-		i++;
 	}
 	va_end(args);
 	return (total_chars);
